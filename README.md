@@ -105,4 +105,4 @@ CRUD以外の機能の実装イメージ
 Figma: https://www.figma.com/design/7Kw9c0o0i3t3KNZKQu04pd/Untitled?node-id=0-1&p=f&m=draw
 
 ## ER図
-![ER図](Untitled Diagram.drawio.png)
+![ER図](卒業制作 Diagram.drawio.png)
