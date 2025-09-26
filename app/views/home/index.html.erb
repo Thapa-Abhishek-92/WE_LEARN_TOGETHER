@@ -1,0 +1,28 @@
+<section class="space-y-6">
+  <div class="text-center space-y-3">
+    <h1 class="text-3xl md:text-4xl font-bold">WE LEARN TOGETHER</h1>
+    <p class="text-gray-600">
+      日本語学習者が日常で出会った「生きた日本語」を投稿し、互いに学び合うコミュニティ
+    </p>
+  </div>
+
+  <div class="flex items-center justify-center gap-3">
+    <%= link_to "投稿一覧を見る", posts_path, class: "rounded-md bg-black px-4 py-2 text-white hover:opacity-90" %>
+    <%= link_to "新しく投稿する", new_post_path, class: "rounded-md border px-4 py-2 hover:bg-gray-100" %>
+  </div>
+
+  <div class="mt-10 grid gap-4 md:grid-cols-3">
+    <div class="rounded-xl border bg-white p-4">
+      <h3 class="font-semibold mb-1">リアルな日本語</h3>
+      <p class="text-sm text-gray-600">教科書にない表現を共有・学習できます。</p>
+    </div>
+    <div class="rounded-xl border bg-white p-4">
+      <h3 class="font-semibold mb-1">コメントで学び合い</h3>
+      <p class="text-sm text-gray-600">使い方の疑問や気づきを気軽に交換。</p>
+    </div>
+    <div class="rounded-xl border bg-white p-4">
+      <h3 class="font-semibold mb-1">日本語のみの環境</h3>
+      <p class="text-sm text-gray-600">日常的に日本語に触れる機会を増やします。</p>
+    </div>
+  </div>
+</section>
