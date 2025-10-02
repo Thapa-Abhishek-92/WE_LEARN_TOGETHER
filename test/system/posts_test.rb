@@ -1,0 +1,36 @@
+require "application_system_test_case"
+
+class PostsTest < ApplicationSystemTestCase
+  setup do
+    @post = posts(:one)
+  end
+
+  test "visiting the index" do
+    visit posts_url
+    assert_selector "h1", text: "投稿一覧"
+  end
+
+  test "should show post" do
+    visit posts_url
+    click_on "Show this post", match: :first
+    assert_selector "h1", text: "投稿詳細"
+  end
+
+  # update と destroy のテストを削除またはコメントアウト
+  # test "should update Post" do
+  #   visit post_url(@post)
+  #   click_on "Edit this post", match: :first
+  #   fill_in "Content", with: @post.content
+  #   fill_in "Situation", with: @post.situation
+  #   fill_in "Title", with: @post.title
+  #   click_on "Update Post"
+  #   assert_text "Post was successfully updated"
+  #   click_on "Back"
+  # end
+
+  # test "should destroy Post" do
+  #   visit post_url(@post)
+  #   click_on "Destroy this post", match: :first
+  #   assert_text "Post was successfully destroyed"
+  # end
+end

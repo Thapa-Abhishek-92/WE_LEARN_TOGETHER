@@ -1,0 +1,51 @@
+<!-- app/views/posts/index.html.erb -->
+<section class="space-y-6">
+  <div class="flex items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold">投稿一覧</h1>
+      <p class="text-gray-600 text-sm">日常で出会った「生きた日本語」をみんなで共有しよう</p>
+    </div>
+    <!-- 次のIssueで new を有効化するまでボタンは非表示 -->
+    <%#= link_to "新規投稿", new_post_path, class: "rounded-md bg-black text-white px-4 py-2 hover:opacity-90" %>
+  </div>
+
+  <% if @posts.any? %>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <% @posts.order(created_at: :desc).each do |post| %>
+        <article class="rounded-lg border bg-white p-4 hover:shadow-md transition-shadow">
+          <h3 class="font-semibold text-lg mb-2">
+            <%= post.title.presence || "（タイトル未設定）" %>
+          </h3>
+          
+          <div class="space-y-2 text-sm">
+            <p class="text-gray-600">
+              <span class="font-medium">学習場面：</span>
+              <%= post.situation.presence || "—" %>
+            </p>
+            
+            <% if post.content.present? %>
+              <p class="text-gray-700 leading-relaxed">
+                <%= truncate(post.content, length: 80) %>
+              </p>
+            <% end %>
+          </div>
+          
+          <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
+            <p class="text-xs text-gray-400">
+              <%= l(post.created_at, format: :short) %>
+            </p>
+            <%= link_to "Show this post", post, class: "text-blue-600 hover:text-blue-800 text-sm" %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-12 text-center">
+      <div class="space-y-3">
+        <div class="text-gray-400 text-4xl">📝</div>
+        <h3 class="text-lg font-medium text-gray-900">まだ投稿がありません</h3>
+        <p class="text-gray-600">次のIssueで「投稿作成」機能を実装予定です。</p>
+      </div>
+    </div>
+  <% end %>
+</section>

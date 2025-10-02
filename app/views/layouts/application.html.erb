@@ -1,23 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title>WE LEARN TOGETHER - 日本語学習コミュニティ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="日本語学習者が互いに学び合うコミュニティプラットフォーム。生きた日本語表現を共有し、みんなで成長しよう。">
+    <meta name="keywords" content="日本語学習,コミュニティ,学習グループ,進捗共有">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
+    <%= render "shared/header" %>
+    
+    <main class="flex-1" role="main">
+      <!-- フラッシュメッセージ用 -->
+      <% if notice %>
+        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 mx-auto max-w-5xl mt-4 rounded-lg">
+          <%= notice %>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 mx-auto max-w-5xl mt-4 rounded-lg">
+          <%= alert %>
+        </div>
+      <% end %>
+      
+      <div class="mx-auto max-w-5xl px-4 py-8">
+        <%= yield %>
+      </div>
+    </main>
+    
+    <%= render "shared/footer" %>
   </body>
 </html>

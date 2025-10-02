@@ -1,0 +1,18 @@
+<header class="border-b bg-white shadow-sm" role="banner">
+  <div class="mx-auto max-w-5xl px-4 py-4">
+    <div class="flex items-center justify-between">
+      <h1 class="text-xl font-bold text-gray-900">
+        <%= link_to root_path, class: "hover:text-blue-600 transition-colors" do %>
+          WE LEARN TOGETHER
+        <% end %>
+      </h1>
+      
+      <!-- MVP後のナビゲーション用（現在は非表示） -->
+      <nav class="hidden md:flex space-x-6" aria-label="メインナビゲーション">
+        <!-- 将来的に追加 -->
+        <%# link_to "ログイン", "#", class: "text-gray-600 hover:text-gray-900" %>
+        <%# link_to "新規登録", "#", class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
+      </nav>
+    </div>
+  </div>
+</header>
