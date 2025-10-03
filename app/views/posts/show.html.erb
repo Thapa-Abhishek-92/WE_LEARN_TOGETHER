@@ -1,10 +1,43 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "投稿詳細" %>
 
-<%= render @post %>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">投稿詳細</h1>
 
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
-  <%= link_to "Back to posts", posts_path %>
+  <article class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+      <%= @post.title.presence || "（タイトル未設定）" %>
+    </h2>
+    
+    <div class="space-y-4">
+      <div>
+        <p class="text-gray-600 font-medium">学習場面:</p>
+        <p class="text-gray-800"><%= @post.situation.presence || "—" %></p>
+      </div>
+      
+      <% if @post.content.present? %>
+        <div>
+          <p class="text-gray-600 font-medium">内容:</p>
+          <div class="text-gray-700 leading-relaxed whitespace-pre-wrap">
+            <%= @post.content %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="mt-6 pt-4 border-t border-gray-200">
+      <p class="text-sm text-gray-400">
+        投稿日時: <%= l(@post.created_at, format: :long) %>
+      </p>
+    </div>
+  </article>
 
-  <%= button_to "Destroy this post", @post, method: :delete %>
+  <div class="mt-8 flex space-x-4">
+    <%= link_to "Back to posts", posts_path, class: "bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" %>
+  </div>
+
+  <% if notice %>
+    <div class="mt-4 p-4 bg-green-100 text-green-700 rounded-md">
+      <%= notice %>
+    </div>
+  <% end %>
 </div>
