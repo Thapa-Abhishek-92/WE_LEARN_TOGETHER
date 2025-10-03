@@ -1,32 +1,50 @@
-<%= form_with(model: post) do |form| %>
-  <% if post.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+<%= form_with(
+      model: post,
+      url: posts_path,          # 送信先を明示
+      method: :post,            # POST を明示
+      local: true,              # 同期送信（デバッグしやすい）
+      data: { turbo: false },   # Turboが干渉しないよう無効化
+      class: "space-y-6"
+    ) do |f| %>
 
-      <ul>
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+  <% if post.errors.any? %>
+    <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
+      <p class="font-medium text-red-800 mb-2">入力エラーがあります：</p>
+      <ul class="list-disc list-inside space-y-1 text-sm text-red-700">
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
+  <div class="space-y-4">
+    <div>
+      <%= f.label :title, "タイトル", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :title,
+            class: "w-full rounded-md border px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
+            placeholder: "例：日常会話で学んだ表現" %>
+    </div>
 
-  <div>
-    <%= form.label :situation, style: "display: block" %>
-    <%= form.text_field :situation %>
-  </div>
+    <div>
+      <%= f.label :situation, "学習した場面", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :situation,
+            class: "w-full rounded-md border px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
+            placeholder: "例：コンビニでの買い物" %>
+    </div>
 
-  <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
-  </div>
+    <div>
+      <%= f.label :content, "内容・詳細", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_area :content, rows: 6,
+            class: "w-full rounded-md border px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
+            placeholder: "学んだ表現や気づいたことを詳しく書いてください..." %>
+    </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="pt-4 flex gap-3">
+      <%= f.submit "投稿する",
+            class: "rounded-md bg-blue-600 px-6 py-2 text-white font-medium hover:bg-blue-700 transition-colors" %>
+      <%= link_to "一覧に戻る", posts_path,
+            class: "rounded-md border px-6 py-2 text-gray-700 hover:bg-gray-50 transition-colors" %>
+    </div>
   </div>
 <% end %>
