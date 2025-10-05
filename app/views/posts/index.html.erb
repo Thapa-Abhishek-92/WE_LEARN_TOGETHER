@@ -14,8 +14,11 @@
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <% @posts.order(created_at: :desc).each do |post| %>
         <article class="rounded-lg border bg-white p-4 hover:shadow-md transition-shadow">
+          <!-- ★タイトルをリンク化 -->
           <h3 class="font-semibold text-lg mb-2">
-            <%= post.title.presence || "（タイトル未設定）" %>
+            <%= link_to (post.title.presence || "（タイトル未設定）"),
+                        post,
+                        class: "hover:underline hover:text-blue-700" %>
           </h3>
 
           <div class="space-y-2 text-sm">
