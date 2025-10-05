@@ -1,27 +1,21 @@
+# config/application.rb
 require_relative "boot"
-
 require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Myapp
+module WeLearnTogether
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
+    # Rails 7 系の既定設定を読み込む（8.0は不可）
     config.load_defaults 7.2
 
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    # 表示は日本時間、DB保存はUTCのまま
+    config.time_zone = "Tokyo"
+    config.active_record.default_timezone = :utc
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # 既定ロケールを日本語に
+    config.i18n.default_locale = :ja
+    # （任意）読み込みロケールの拡張：locales配下のymlを全部読む
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
   end
 end

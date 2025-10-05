@@ -1,0 +1,8 @@
+# config/locales/ja.yml
+ja:
+  time:
+    formats:
+      long: "%Y年%m月%d日 %H:%M"
+  date:
+    formats:
+      long: "%Y年%m月%d日"
