@@ -1,9 +1,9 @@
 <%= form_with(
       model: post,
-      url: posts_path,          # 送信先を明示
-      method: :post,            # POST を明示
-      local: true,              # 同期送信（デバッグしやすい）
-      data: { turbo: false },   # Turboが干渉しないよう無効化
+      url:  post.persisted? ? post_path(post) : posts_path,            # ← 新規/編集でURLを明示
+      method: post.persisted? ? :patch : :post,                        # ← 新規=POST / 編集=PATCH
+      local: true,                                                     # ← 同期送信
+      data: { turbo: false },                                          # ← Turbo無効（送信の確実化）
       class: "space-y-6"
     ) do |f| %>
 
@@ -41,10 +41,14 @@
     </div>
 
     <div class="pt-4 flex gap-3">
-      <%= f.submit "投稿する",
+      <%= f.submit (post.persisted? ? "更新する" : "投稿する"),
             class: "rounded-md bg-blue-600 px-6 py-2 text-white font-medium hover:bg-blue-700 transition-colors" %>
-      <%= link_to "一覧に戻る", posts_path,
-            class: "rounded-md border px-6 py-2 text-gray-700 hover:bg-gray-50 transition-colors" %>
+
+      <% if post.persisted? %>
+        <%= link_to "詳細へ戻る", post, class: "rounded-md border px-6 py-2 text-gray-700 hover:bg-gray-50 transition-colors" %>
+      <% else %>
+        <%= link_to "一覧に戻る", posts_path, class: "rounded-md border px-6 py-2 text-gray-700 hover:bg-gray-50 transition-colors" %>
+      <% end %>
     </div>
   </div>
 <% end %>
