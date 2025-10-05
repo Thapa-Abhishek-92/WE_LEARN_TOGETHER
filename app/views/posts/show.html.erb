@@ -15,12 +15,12 @@
       <%= link_to "編集", edit_post_path(@post),
             class: "inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 bg-white hover:bg-gray-50" %>
 
-      <%# Turbo を無効化して確実に DELETE を送る %>
-      <%= button_to "削除", post_path(@post),
-            method: :delete,
-            data: { turbo_confirm: "本当に削除しますか？" },
-            form: { data: { turbo: false } },
-            class: "inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700" %>
+      <% unless Rails.env.production? %>
+        <%= button_to "削除", post_path(@post),
+              method: :delete,
+              form: { data: { turbo_confirm: "本当に削除しますか？" } },
+              class: "inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700" %>
+      <% end %>
 
       <%= link_to "一覧に戻る", posts_path,
             class: "inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 bg-white hover:bg-gray-50" %>
