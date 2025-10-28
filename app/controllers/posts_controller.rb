@@ -1,31 +1,33 @@
+# app/controllers/posts_controller.rb
 class PostsController < ApplicationController
-  # ✅ 作成・編集・削除はログイン必須
-  before_action :authenticate_user!, only: %i[new create edit update destroy]
-
   before_action :set_post, only: %i[show edit update destroy]
-  # MVP中の本番では削除だけブロック（ログイン実装後に本人のみ削除可へ移行）
-  before_action :protect_destroy_in_production, only: :destroy
+  # 認証が必要なアクション（index/show 以外）
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.all.order(created_at: :desc)
   end
 
-  def show; end
+  def show
+  end
 
   def new
-    @post = Post.new
+    # ユーザーに紐づく新規インスタンス
+    @post = current_user.posts.build
   end
 
   def create
-    @post = Post.new(post_params)
+    # 必ず current_user に紐づけて作成
+    @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to posts_path, notice: "投稿が作成されました！"
+      redirect_to @post, notice: "投稿を作成しました。"
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @post.update(post_params)
@@ -37,7 +39,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_path, notice: "投稿が削除されました。"
+    redirect_to posts_url, notice: "投稿を削除しました。"
   end
 
   private
@@ -47,12 +49,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
+    # ユーザー関連は受け取らない（:user_id は許可しない）
     params.require(:post).permit(:title, :situation, :content)
-  end
-
-  # ▼ 本番では削除を一時的に無効化（MVP措置）
-  def protect_destroy_in_production
-    return unless Rails.env.production?
-    redirect_to @post, alert: "MVP段階の本番環境では削除を無効化しています。ログイン実装後に本人のみ削除可にします。"
   end
 end
