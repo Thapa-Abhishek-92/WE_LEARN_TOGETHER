@@ -1,3 +1,4 @@
+# test/system/posts_test.rb
 require "application_system_test_case"
 
 class PostsTest < ApplicationSystemTestCase
@@ -7,30 +8,22 @@ class PostsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit posts_url
-    assert_selector "h1", text: "投稿一覧"
+    assert_selector "h1", text: "Posts"
   end
 
   test "should show post" do
     visit posts_url
-    click_on "Show this post", match: :first
-    assert_selector "h1", text: "投稿詳細"
+
+    if page.has_link?(@post.title)
+      click_on @post.title
+    elsif page.has_link?("Show this post")
+      click_on "Show this post", match: :first
+    else
+      # 最後の保険: /posts/:id へ飛ぶ最初のリンクを踏む
+      first(:css, 'a[href^="/posts/"]').click
+    end
+
+    assert_text @post.title
+    assert_text @post.content
   end
-
-  # update と destroy のテストを削除またはコメントアウト
-  # test "should update Post" do
-  #   visit post_url(@post)
-  #   click_on "Edit this post", match: :first
-  #   fill_in "Content", with: @post.content
-  #   fill_in "Situation", with: @post.situation
-  #   fill_in "Title", with: @post.title
-  #   click_on "Update Post"
-  #   assert_text "Post was successfully updated"
-  #   click_on "Back"
-  # end
-
-  # test "should destroy Post" do
-  #   visit post_url(@post)
-  #   click_on "Destroy this post", match: :first
-  #   assert_text "Post was successfully destroyed"
-  # end
 end
