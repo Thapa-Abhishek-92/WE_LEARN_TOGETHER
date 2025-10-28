@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root "home#index"
 
   # 投稿は MVP で CRUD まで利用

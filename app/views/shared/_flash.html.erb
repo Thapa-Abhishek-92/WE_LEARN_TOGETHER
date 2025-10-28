@@ -1,0 +1,11 @@
+<%# app/views/shared/_flash.html.erb %>
+<%# flash を一度だけ出して即クリア。囲み/枠線/背景は一切付けない %>
+<% if flash.any? %>
+  <div data-flash aria-live="polite" role="status">
+    <% flash.each do |type, message| %>
+      <%# メッセージだけ（色/枠なし）。必要なら strong 等に。 %>
+      <p class="flash-item"><%= message %></p>
+    <% end %>
+  </div>
+  <% flash.clear %>
+<% end %>

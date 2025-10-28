@@ -1,6 +1,12 @@
+# test/test_helper.rb
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+
+# ← 追加：IntegrationTest で sign_in / sign_out を使えるようにする
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+end
 
 module ActiveSupport
   class TestCase

@@ -1,0 +1,16 @@
+<%# 使い方: render "shared/form_field", f: f, name: :title, label: "タイトル", type: :text, help: "補足テキスト（任意）" %>
+<% label ||= nil; type ||= :text; help ||= nil %>
+
+<div class="mb-4">
+  <%= f.label name, (label || name.to_s.humanize), class: "field-label" %>
+
+  <% if type == :textarea %>
+    <%= f.text_area name, class: "textarea" %>
+  <% else %>
+    <%= f.text_field name, class: "input" %>
+  <% end %>
+
+  <% if help.present? %>
+    <p class="field-help"><%= help %></p>
+  <% end %>
+</div>

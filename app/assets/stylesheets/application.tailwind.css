@@ -1,1 +1,144 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Component styles without @apply (Tailwind v4 safe) --- */
+
+/* コンテナ */
+.container-page {
+  margin-inline: auto;     /* mx-auto */
+  padding-inline: 1rem;    /* px-4 */
+  max-width: 80rem;        /* ~max-w-screen-xl 相当 */
+}
+
+/* カード */
+.card {
+  border-radius: 1rem;               /* ~ rounded-2xl */
+  border: 1px solid #e5e7eb;         /* gray-200 */
+  background: #ffffff;               /* white */
+  box-shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06); /* shadow-sm */
+}
+.card-body { padding: 1.5rem; }      /* p-6 */
+@media (min-width: 48rem) {          /* md: */
+  .card-body { padding: 2rem; }      /* p-8 */
+}
+.card-title  {
+  font-size: 1.125rem;               /* text-lg */
+  font-weight: 600;                  /* font-semibold */
+  color: #111827;                    /* gray-900 */
+}
+.card-subtle {
+  font-size: .875rem;                /* text-sm */
+  color: #6b7280;                    /* gray-500 */
+}
+
+/* ボタン（ベース + バリエーション） */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border-radius: 0.75rem;            /* rounded-xl */
+  padding: .5rem 1rem;               /* px-4 py-2 */
+  font-size: .875rem;                /* text-sm */
+  font-weight: 500;                  /* font-medium */
+  transition: background-color .15s, color .15s, box-shadow .15s, border-color .15s;
+  text-decoration: none;
+}
+.btn-primary {
+  background: #2563eb;               /* blue-600 */
+  color: #fff;
+}
+.btn-primary:hover { background: #1d4ed8; } /* blue-700 */
+
+.btn-secondary {
+  background: #ffffff;
+  color: #374151;                     /* gray-700 */
+  border: 1px solid #d1d5db;         /* gray-300 */
+}
+.btn-secondary:hover { background: #f9fafb; } /* gray-50 */
+
+.btn-danger {
+  background: #e11d48;               /* rose-600 */
+  color: #fff;
+}
+.btn-danger:hover { background: #be123c; }    /* rose-700 */
+
+.btn-ghost {
+  background: transparent;
+  color: #4b5563;                     /* gray-600 */
+}
+.btn-ghost:hover { background: #f3f4f6; }     /* gray-100 */
+
+/* 入力 */
+.input {
+  width: 100%;
+  border-radius: 0.75rem;            /* rounded-xl */
+  border: 1px solid #d1d5db;         /* gray-300 */
+  background: #ffffff;
+  padding: .5rem .75rem;             /* px-3 py-2 */
+  color: #111827;                    /* gray-900 */
+}
+.input::placeholder { color: #9ca3af; } /* gray-400 */
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;             /* blue-500 */
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+.textarea {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  padding: .5rem .75rem;
+  color: #111827;
+  min-height: 140px;
+}
+.textarea::placeholder { color: #9ca3af; }
+.textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.field-label { margin-bottom: .25rem; display:block; font-size: .875rem; font-weight: 500; color:#374151; }
+.field-help  { margin-top: .25rem; font-size: .75rem; color:#6b7280; }
+
+/* セクション見出し */
+.section-h1   { font-size: 1.875rem; line-height: 2.25rem; font-weight:700; letter-spacing:-.025em; color:#111827; }
+.section-desc { margin-top: .5rem; color:#4b5563; }
+
+/* === Flash（囲みなし） =============================== */
+[data-flash]{
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0.5rem auto 0;
+  max-width: 80rem;   /* レイアウト幅に合わせたい場合。不要なら削除 */
+}
+[data-flash] .flash-item{
+  margin: .25rem 0;
+  font-size: 0.875rem;   /* text-sm 相当 */
+  color: #111827;        /* gray-900。薄くしたいなら #4b5563 */
+  line-height: 1.5;
+}
+[data-flash]:focus{
+  outline: none;
+}
+
+/* === Header nav links（通常は下線なし／ホバー時だけ下線） ======= */
+.nav-link{
+  text-decoration: none;     /* 通常は下線なし */
+  color: #374151;            /* gray-700 */
+  font-size: .875rem;        /* text-sm */
+  line-height: 1.5;
+  font-weight: 500;          /* font-medium */
+}
+.nav-link:hover{
+  text-decoration: underline;      /* ホバー時だけ下線 */
+  text-underline-offset: 3px;      /* 下線を少し離す */
+  color: #1d4ed8;                  /* blue-700 */
+}
+
+/* ロゴの a に使っている no-underline も保険で */
+.no-underline{ text-decoration: none; }
