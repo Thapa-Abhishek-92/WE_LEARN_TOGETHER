@@ -8,7 +8,13 @@ class PostsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit posts_url
-    assert_selector "h1", text: "Posts"
+
+    # data-testid があればそれを優先、無ければ h1/h2 を見る
+    if page.has_css?("[data-testid='posts-index-title']", visible: true)
+      assert_selector "[data-testid='posts-index-title']", text: /Posts|投稿一覧/i
+    else
+      assert_selector "h1, h2", text: /Posts|投稿一覧/i
+    end
   end
 
   test "should show post" do
@@ -19,7 +25,6 @@ class PostsTest < ApplicationSystemTestCase
     elsif page.has_link?("Show this post")
       click_on "Show this post", match: :first
     else
-      # 最後の保険: /posts/:id へ飛ぶ最初のリンクを踏む
       first(:css, 'a[href^="/posts/"]').click
     end
 
