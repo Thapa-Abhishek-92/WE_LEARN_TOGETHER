@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
+  # ✅ 作成・編集・削除はログイン必須
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
+
   before_action :set_post, only: %i[show edit update destroy]
-  before_action :protect_destroy_in_production, only: :destroy  # ← 追加
+  # MVP中の本番では削除だけブロック（ログイン実装後に本人のみ削除可へ移行）
+  before_action :protect_destroy_in_production, only: :destroy
 
   def index
     @posts = Post.order(created_at: :desc)

@@ -1,54 +1,21 @@
-<%= form_with(
-      model: post,
-      url:  post.persisted? ? post_path(post) : posts_path,            # ← 新規/編集でURLを明示
-      method: post.persisted? ? :patch : :post,                        # ← 新規=POST / 編集=PATCH
-      local: true,                                                     # ← 同期送信
-      data: { turbo: false },                                          # ← Turbo無効（送信の確実化）
-      class: "space-y-6"
-    ) do |f| %>
-
+<%= form_with model: post, local: true, data: { turbo: false } do |f| %>
   <% if post.errors.any? %>
-    <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4">
-      <p class="font-medium text-red-800 mb-2">入力エラーがあります：</p>
-      <ul class="list-disc list-inside space-y-1 text-sm text-red-700">
-        <% post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+    <div class="mb-6 rounded-xl border border-rose-200 bg-rose-50 p-4 text-rose-900">
+      <p class="mb-2 font-medium">入力エラーがあります：</p>
+      <ul class="list-inside list-disc text-sm">
+        <% post.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="space-y-4">
-    <div>
-      <%= f.label :title, "タイトル", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= f.text_field :title,
-            class: "w-full rounded-md border px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
-            placeholder: "例：日常会話で学んだ表現" %>
-    </div>
+  <%= render "shared/form_field", f: f, name: :title,     label: "タイトル" %>
+  <%= render "shared/form_field", f: f, name: :situation, label: "学習した場面" %>
+  <%= render "shared/form_field", f: f, name: :content,   label: "内容・詳細", type: :textarea %>
 
-    <div>
-      <%= f.label :situation, "学習した場面", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= f.text_field :situation,
-            class: "w-full rounded-md border px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
-            placeholder: "例：コンビニでの買い物" %>
-    </div>
-
-    <div>
-      <%= f.label :content, "内容・詳細", class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= f.text_area :content, rows: 6,
-            class: "w-full rounded-md border px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500",
-            placeholder: "学んだ表現や気づいたことを詳しく書いてください..." %>
-    </div>
-
-    <div class="pt-4 flex gap-3">
-      <%= f.submit (post.persisted? ? "更新する" : "投稿する"),
-            class: "rounded-md bg-blue-600 px-6 py-2 text-white font-medium hover:bg-blue-700 transition-colors" %>
-
-      <% if post.persisted? %>
-        <%= link_to "詳細へ戻る", post, class: "rounded-md border px-6 py-2 text-gray-700 hover:bg-gray-50 transition-colors" %>
-      <% else %>
-        <%= link_to "一覧に戻る", posts_path, class: "rounded-md border px-6 py-2 text-gray-700 hover:bg-gray-50 transition-colors" %>
-      <% end %>
-    </div>
+  <div class="mt-6 flex gap-3">
+    <%= f.submit (post.persisted? ? "更新する" : "投稿する"), class: "btn-primary" %>
+    <%= link_to "一覧に戻る", posts_path, class: "btn-secondary" %>
   </div>
 <% end %>
