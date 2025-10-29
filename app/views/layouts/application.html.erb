@@ -10,11 +10,25 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
+
   <body class="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
     <%= render "shared/header" %>
 
-    <!-- ヘッダー直下でフラッシュ表示 -->
-    <%= render "shared/flash" %>
+    <!-- フラッシュ: body直下で表示 -->
+    <div class="w-full">
+      <div class="mx-auto max-w-screen-xl px-4 mt-4">
+        <% if notice.present? %>
+          <p class="mb-3 rounded-md bg-green-100 text-green-900 px-4 py-2">
+            <%= notice %>
+          </p>
+        <% end %>
+        <% if alert.present? %>
+          <p class="mb-3 rounded-md bg-red-100 text-red-900 px-4 py-2">
+            <%= alert %>
+          </p>
+        <% end %>
+      </div>
+    </div>
 
     <main class="flex-1" role="main">
       <%= yield %>
